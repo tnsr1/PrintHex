@@ -1,6 +1,6 @@
 * foxpro code
 * autors alex; + mistral
-* Функция для чтения файла и вывода его содержимого в шестнадцатеричном формате
+* Р¤СѓРЅРєС†РёСЏ РґР»СЏ С‡С‚РµРЅРёСЏ С„Р°Р№Р»Р° Рё РІС‹РІРѕРґР° РµРіРѕ СЃРѕРґРµСЂР¶РёРјРѕРіРѕ РІ С€РµСЃС‚РЅР°РґС†Р°С‚РµСЂРёС‡РЅРѕРј С„РѕСЂРјР°С‚Рµ
 
 *!*	This code reads the contents of a file specified by the `cFileName` variable, 
 *!*	and writes the contents in hexadecimal format to a new file with the same name but with the ".hex" extension.
@@ -20,7 +20,7 @@
 
 CLEAR
 _SCREEN.MousePointer = 11 
-	m.cFileName = "c:\dev\vfp\HexEdit\hexedit.sct"  && Замените на имя вашего файла
+	m.cFileName = "c:\dev\vfp\HexEdit\hexedit.scx"  && Р—Р°РјРµРЅРёС‚Рµ РЅР° РёРјСЏ РІР°С€РµРіРѕ С„Р°Р№Р»Р°
 
 	*INPUT
     LOCAL lnFile, lnWord, lcHex, lnBytesRead, lnBlockSize, lnFileSize, lcString, lnIndex, lnTotalBytes
@@ -30,12 +30,12 @@ _SCREEN.MousePointer = 11
 
 	m.lcOut = FORCEEXT(cFileName, "hex")
 
-    m.lnBlockSize = 16  && Размер блока для чтения
+    m.lnBlockSize = 16  && Р Р°Р·РјРµСЂ Р±Р»РѕРєР° РґР»СЏ С‡С‚РµРЅРёСЏ
     m.lnFile = FOPEN(cFileName, 0)  && (Default) Read-only
 
     IF m.lnFile = -1
-        WAIT WINDOW "Ошибка открытия файла" NOWAIT
-        ?"Ошибка открытия файла"
+        WAIT WINDOW "РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°" NOWAIT
+        ?"РћС€РёР±РєР° РѕС‚РєСЂС‹С‚РёСЏ С„Р°Р№Р»Р°"
         RETURN
     ENDIF
 
@@ -44,8 +44,8 @@ _SCREEN.MousePointer = 11
 
 	IF m.lnFileSize <= 0
 	 * If file is empty, display an error message.
-	    WAIT WINDOW "Этот файл пуст!" NOWAIT
-	    ?"Этот файл пуст!"
+	    WAIT WINDOW "Р­С‚РѕС‚ С„Р°Р№Р» РїСѓСЃС‚!" NOWAIT
+	    ?"Р­С‚РѕС‚ С„Р°Р№Р» РїСѓСЃС‚!"
 		RETURN
 	ENDIF
 
@@ -58,7 +58,7 @@ _SCREEN.MousePointer = 11
 	m.lnHexLine = 0
 	m.lnLeft = m.lnFileSize
     DO WHILE m.lnLeft > 0
-        m.lcString = FREAD(m.lnFile, MIN(m.lnBlockSize, m.lnLeft))  && Чтение блока данных
+        m.lcString = FREAD(m.lnFile, MIN(m.lnBlockSize, m.lnLeft))  && Р§С‚РµРЅРёРµ Р±Р»РѕРєР° РґР°РЅРЅС‹С…
         m.lnBytesRead = LEN(m.lcString)
         IF m.lnBytesRead = 0
             EXIT
@@ -91,21 +91,21 @@ _SCREEN.MousePointer = 11
 		
     ENDDO
 
-    FCLOSE(m.lnFile)  && Закрытие файла
+    FCLOSE(m.lnFile)  && Р—Р°РєСЂС‹С‚РёРµ С„Р°Р№Р»Р°
     
     _SCREEN.MousePointer = 0
     
-    *MESSAGEBOX("Готово!")
+    *MESSAGEBOX("Р“РѕС‚РѕРІРѕ!")
     
     MODIFY FILE (m.lcOut)
 RETURN
 
-* Функция для преобразования слова в шестнадцатеричное представление
+* Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ СЃР»РѕРІР° РІ С€РµСЃС‚РЅР°РґС†Р°С‚РµСЂРёС‡РЅРѕРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ
 FUNCTION HexWord(tnWord, tlZeroX)
     RETURN (IIF(m.tlZeroX,"0x","")+STRCONV(CHR(m.tnWord),15))
 ENDFUNC
 
-* Функция для преобразования числа в шестнадцатеричное представление с 8 символами
+* Р¤СѓРЅРєС†РёСЏ РґР»СЏ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРёСЏ С‡РёСЃР»Р° РІ С€РµСЃС‚РЅР°РґС†Р°С‚РµСЂРёС‡РЅРѕРµ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёРµ СЃ 8 СЃРёРјРІРѕР»Р°РјРё
 FUNCTION Hex8(tnNum)
     IF m.tnNum = 0
         RETURN REPLICATE("0", 8)
